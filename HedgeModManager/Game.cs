@@ -58,7 +58,7 @@ namespace HedgeModManager
             Folders = new[] { "disk/wars_patch" },
             AppID = "637100",
             GBProtocol = "hedgemmforces",
-            Is64Bit = true,
+            Is64Bit = false,
             ModLoader = ModLoaders.HE2ModLoader,
             CodesURL = Resources.URL_FML_CODES,
             GamePath = Path.Combine("SonicForces", "build", "main", "projects", "exec", "Sonic Forces.exe")
@@ -103,7 +103,7 @@ namespace HedgeModManager
             Folders = new[] { "PCCriPak" },
             EGSID = "e5071e19d08c45a6bdda5d92fbd0a03e",
             GBProtocol = "hedgemmrainbow",
-            Is64Bit = true,
+            Is64Bit = false,
             ModLoader = ModLoaders.RainbowModLoader,
             CodesURL = Resources.URL_RML_CODES,
             GamePath = Path.Combine("SonicColorsUltimate", "rainbow Shipping", "Sonic Colors - Ultimate.exe")
