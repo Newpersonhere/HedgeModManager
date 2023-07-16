@@ -1,9 +1,5 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace HedgeModManager
 {
@@ -17,6 +13,10 @@ namespace HedgeModManager
         public static string UILanguage;
         public static string UITheme;
 
+        public static int CodesSortingColumnIndex = 1;
+
+        public static bool CodesUseTreeView = true;
+
         static RegistryConfig()
         {
             Load();
@@ -25,10 +25,13 @@ namespace HedgeModManager
         public static void Save()
         {
             var key = Registry.CurrentUser.CreateSubKey(ConfigPath);
+            key.SetValue("ExecutablePath", Assembly.GetExecutingAssembly().Location);
             key.SetValue("LastGame", LastGameDirectory);
-            key.SetValue("ExtraGameDirectories", ExtraGameDirectories);
-            key.SetValue("UILanguage", UILanguage);
-            key.SetValue("UITheme", UITheme);
+            key.SetValue(nameof(ExtraGameDirectories), ExtraGameDirectories);
+            key.SetValue(nameof(UILanguage), UILanguage);
+            key.SetValue(nameof(UITheme), UITheme);
+            key.SetValue(nameof(CodesSortingColumnIndex), CodesSortingColumnIndex);
+            key.SetValue(nameof(CodesUseTreeView), CodesUseTreeView ? 1 : 0);
             key.Close();
         }
 
@@ -47,10 +50,12 @@ namespace HedgeModManager
             }
 
             var key = Registry.CurrentUser.CreateSubKey(ConfigPath);
-            LastGameDirectory = (string)key.GetValue("LastGame", string.Empty);
-            ExtraGameDirectories = (string)key.GetValue("ExtraGameDirectories", string.Empty);
-            UILanguage = (string)key.GetValue("UILanguage", HedgeApp.PCCulture);
-            UITheme = (string)key.GetValue("UITheme", useLightMode ? "LightTheme" : "DarkerTheme");
+            LastGameDirectory       = (string)key.GetValue("LastGame", string.Empty);
+            ExtraGameDirectories    = (string)key.GetValue(nameof(ExtraGameDirectories), string.Empty);
+            UILanguage              = (string)key.GetValue(nameof(UILanguage), HedgeApp.PCCulture);
+            UITheme                 = (string)key.GetValue(nameof(UITheme), useLightMode ? "LightTheme" : "DarkerTheme");
+            CodesSortingColumnIndex = (int)key.GetValue(nameof(CodesSortingColumnIndex), 1);
+            CodesUseTreeView        = (int)key.GetValue(nameof(CodesUseTreeView), 1) != 0;
             key.Close();
         }
     }
